@@ -1,6 +1,8 @@
 defmodule Todo.List do
   defstruct auto_id: 1, entries: %{}
 
+  # default values are already defined during struct definiton,
+  # so no need to define in new method.
   @spec new :: %Todo.List{auto_id: 1, entries: %{}}
   def new(), do: %Todo.List{}
 
