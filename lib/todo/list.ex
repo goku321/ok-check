@@ -34,13 +34,13 @@ defmodule Todo.List do
 
   @spec update_entry(atom | %{:entries => map, optional(any) => any}, any, any) ::
           atom | %{:entries => map, optional(any) => any}
-  def update_entry(todo_list, entry_id, updater_func) do
+  def update_entry(todo_list, entry_id, updater_lambda) do
     case Map.fetch(todo_list.entries, entry_id) do
       :error ->
         todo_list
 
       {:ok, old_entry} ->
-        new_entry = %{} = updater_func.(old_entry)
+        new_entry = %{} = updater_lambda.(old_entry)
         new_entries = Map.put(todo_list.entries, new_entry.id, new_entry)
         %Todo.List{todo_list | entries: new_entries}
     end
