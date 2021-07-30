@@ -6,6 +6,16 @@ defmodule Todo.List do
   @spec new :: %Todo.List{auto_id: 1, entries: %{}}
   def new(), do: %Todo.List{}
 
+  def new(entries) do
+    Enum.reduce(
+      entries,
+      %Todo.List{},
+      fn entry, todo_list_acc ->
+        add_entry(todo_list_acc, entry)
+      end
+    )
+  end
+
   @spec add_entry(atom | %{:auto_id => any, optional(any) => any}, map) :: %{
           :id => any,
           optional(any) => any
