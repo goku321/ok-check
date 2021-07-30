@@ -1,7 +1,7 @@
 defmodule Todo.List do
   defstruct auto_id: 1, entries: %{}
 
-  # default values are already defined during struct definiton,
+  # default values are already defined during struct definition,
   # so no need to define in new method.
   @spec new :: %Todo.List{auto_id: 1, entries: %{}}
   def new(), do: %Todo.List{}
@@ -46,15 +46,9 @@ defmodule Todo.List do
     end
   end
 
+  @spec delete_entry(atom | %{:entries => map, optional(any) => any}, any) ::
+          atom | %{:entries => keyword | map, optional(any) => any}
   def delete_entry(todo_list, entry_id) do
-    case Map.fetch(todo_list.entries, entry_id) do
-      :error ->
-        todo_list
-
-      {:ok, _} ->
-        new_entries = pop_in(todo_list[entry_id])
-        |> elem(1)
-        %Todo.List{todo_list | entries: new_entries}
-    end
+    %Todo.List{todo_list | entries: Map.delete(todo_list.entries, entry_id)}
   end
 end
