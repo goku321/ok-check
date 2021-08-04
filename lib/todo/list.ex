@@ -6,13 +6,12 @@ defmodule Todo.List do
   @spec new :: %Todo.List{auto_id: 1, entries: %{}}
   def new(), do: %Todo.List{}
 
-  def new(entries) do
+  @spec new(any) :: any
+  def new(entries \\ []) do
     Enum.reduce(
       entries,
       %Todo.List{},
-      fn entry, todo_list_acc ->
-        add_entry(todo_list_acc, entry)
-      end
+      &add_entry(&2, &1)
     )
   end
 
